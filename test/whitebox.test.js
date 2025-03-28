@@ -1,9 +1,10 @@
 const {
   controlFlowExample,
   dataFlowExample,
+  app,
   server,
   testResults,
-} = require("../index");
+} = require("../index"); // Adjust path if needed (e.g., "./index" if in same dir)
 const request = require("supertest");
 
 describe("White Box Testing", () => {
@@ -22,7 +23,7 @@ describe("White Box Testing", () => {
   // Dynamic Test Case API Testing
   describe("Dynamic Test Case Endpoint", () => {
     test("POST /whitebox-testing/dynamic should return correct results", async () => {
-      const response = await request(server.app)
+      const response = await request(app) // Use `app` directly
         .post("/whitebox-testing/dynamic")
         .send({ controlFlowInput: 15, dataFlowInputA: 8, dataFlowInputB: 3 });
 
@@ -32,7 +33,7 @@ describe("White Box Testing", () => {
     });
 
     test("POST /whitebox-testing/dynamic should reject invalid input", async () => {
-      const response = await request(server.app)
+      const response = await request(app) // Use `app` directly
         .post("/whitebox-testing/dynamic")
         .send({
           controlFlowInput: "invalid",
@@ -45,7 +46,7 @@ describe("White Box Testing", () => {
     });
 
     test("Logs should capture test results", async () => {
-      await request(server.app)
+      await request(app) // Use `app` directly
         .post("/whitebox-testing/dynamic")
         .send({ controlFlowInput: 7, dataFlowInputA: 2, dataFlowInputB: 5 });
 
@@ -57,8 +58,12 @@ describe("White Box Testing", () => {
     });
   });
 
-  // Cleanup function to close
+  // Cleanup (only if server is running)
   afterAll((done) => {
-    server.close(done);
+    if (server && typeof server.close === "function") {
+      server.close(done);
+    } else {
+      done();
+    }
   });
 });
