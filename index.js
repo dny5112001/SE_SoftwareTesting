@@ -10,7 +10,7 @@ const testResults = [];
 
 // Extracted functions for testability
 function controlFlowExample(num) {
-  if (num > 10) {
+  if (num < 10) {
     return "Greater than 10";
   } else {
     return "10 or less";
