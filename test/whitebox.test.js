@@ -57,7 +57,7 @@ describe("White Box Testing", () => {
     });
   });
 
-  // Cleanup
+  // Cleanup function to close
   afterAll((done) => {
     server.close(done);
   });
